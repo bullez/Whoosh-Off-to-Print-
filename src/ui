@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<style>
+  :root{
+    --bg: var(--figma-color-bg, #2c2c2c);
+    --bg2: var(--figma-color-bg-secondary, #383838);
+    --bg3: var(--figma-color-bg-tertiary, #444);
+    --text: var(--figma-color-text, #ffffff);
+    --text2: var(--figma-color-text-secondary, #b8b8b8);
+    --border: var(--figma-color-border, #4a4a4a);
+    --accent: var(--figma-color-bg-brand, #0d99ff);
+    --accentText: var(--figma-color-text-onbrand, #ffffff);
+    --ok: #18a058;
+    --warn: var(--figma-color-text-warning, #e0a63a);
+    --err: #e05b5b;
+  }
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; height:100%; }
+  body{
+    background: var(--bg); color: var(--text);
+    font: 11px/1.45 "Inter", -apple-system, "Segoe UI", Roboto, sans-serif;
+    display:flex; flex-direction:column; height:100vh; overflow:hidden;
+  }
+  header{ padding:12px 14px 8px; border-bottom:1px solid var(--border); flex:0 0 auto; }
+  h1{ font-size:13px; margin:0; font-weight:600; letter-spacing:.2px; }
+  h1 small{ font-weight:400; color:var(--text2); font-size:10px; margin-left:6px; }
+  nav{ display:flex; gap:4px; padding:8px 12px 0; border-bottom:1px solid var(--border); flex:0 0 auto; }
+  nav button{
+    background:none; border:none; color:var(--text2); padding:6px 10px; border-radius:6px 6px 0 0;
+    cursor:pointer; font:inherit; font-weight:500; border-bottom:2px solid transparent;
+  }
+  nav button:hover{ color:var(--text); }
+  nav button.active{ color:var(--text); border-bottom-color:var(--accent); }
+  main{ flex:1 1 auto; overflow-y:auto; padding:12px 14px 20px; }
+  .panel{ display:none; } .panel.active{ display:block; }
+  .row{ margin-bottom:10px; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  label{ display:block; color:var(--text2); font-size:10px; margin-bottom:4px; text-transform:uppercase; letter-spacing:.4px; }
+  input[type=number], input[type=text], select{
+    width:100%; background:var(--bg2); color:var(--text); border:1px solid var(--border);
+    border-radius:6px; padding:6px 8px; font:inherit;
+  }
+  input[type=number]:focus, select:focus, input[type=text]:focus{ outline:1px solid var(--accent); }
+  input[type=color]{
+    width:100%; height:30px; padding:2px; background:var(--bg2);
+    border:1px solid var(--border); border-radius:6px;
+  }
+  .chips{ display:flex; flex-wrap:wrap; gap:6px; }
+  .chip{
+    background:var(--bg2); border:1px solid var(--border); color:var(--text);
+    border-radius:14px; padding:4px 11px; cursor:pointer; font:inherit;
+  }
+  .chip:hover{ border-color:var(--accent); }
+  .chip.active{ background:var(--accent); border-color:var(--accent); color:var(--accentText); }
+  .seg{ display:flex; border:1px solid var(--border); border-radius:6px; overflow:hidden; }
+  .seg button{
+    flex:1; background:var(--bg2); border:none; color:var(--text2); padding:6px 4px;
+    cursor:pointer; font:inherit;
+  }
+  .seg button.active{ background:var(--accent); color:var(--accentText); }
+  .btn{
+    display:block; width:100%; text-align:left; background:var(--bg2); color:var(--text);
+    border:1px solid var(--border); border-radius:8px; padding:9px 11px; margin-bottom:8px;
+    cursor:pointer; font:inherit;
+  }
+  .btn:hover{ border-color:var(--accent); background:var(--bg3); }
+  .btn b{ display:block; font-weight:600; }
+  .btn span{ color:var(--text2); font-size:10px; }
+  .btn.primary{ background:var(--accent); border-color:var(--accent); color:var(--accentText); text-align:center; }
+  .btn.primary span{ color:var(--accentText); opacity:.75; }
+  .chk{ display:flex; align-items:center; gap:7px; margin-bottom:6px; color:var(--text); }
+  .chk input{ accent-color:var(--accent); }
+  .info{
+    background:var(--bg2); border:1px solid var(--border); border-radius:8px;
+    padding:8px 10px; color:var(--text2); margin-bottom:10px; font-size:10px;
+  }
+  .info b{ color:var(--text); font-weight:600; }
+  .log{
+    margin-top:12px; border-top:1px solid var(--border); padding-top:8px;
+    font-size:10px; color:var(--text2); max-height:150px; overflow-y:auto; white-space:pre-wrap;
+  }
+  .log .ok{ color:var(--ok); } .log .warn{ color:var(--warn); } .log .err{ color:var(--err); }
+  .swatch{ width:100%; height:38px; border-radius:8px; border:1px solid var(--border); }
+  .hint{ color:var(--text2); font-size:10px; margin:-2px 0 10px; }
+  code{ background:var(--bg3); padding:1px 4px; border-radius:4px; font-size:10px; }
+  .sep{ height:1px; background:var(--border); margin:12px 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Whoosh — Off to Print! <small>макеты под печать: формат, DPI, вылеты, CMYK</small></h1>
+</header>
+
+<nav>
+  <button class="active" data-tab="doc">Макет</button>
+  <button data-tab="exp">Экспорт</button>
+  <button data-tab="cmyk">CMYK</button>
+  <button data-tab="help">Справка</button>
+</nav>
+
+<main>
+  <!-- ============================ Макет ============================ -->
+  <section class="panel active" id="panel-doc">
+    <div class="row">
+      <label>Формат</label>
+      <div class="chips" id="presets"></div>
+    </div>
+
+    <div class="grid2 row">
+      <div>
+        <label>Ширина, мм</label>
+        <input type="number" id="wmm" value="210" min="5" max="2000" step="0.1">
+      </div>
+      <div>
+        <label>Высота, мм</label>
+        <input type="number" id="hmm" value="297" min="5" max="2000" step="0.1">
+      </div>
+    </div>
+
+    <div class="row">
+      <label>Ориентация</label>
+      <div class="seg" id="orient">
+        <button class="active" data-o="portrait">Книжная</button>
+        <button data-o="landscape">Альбомная</button>
+      </div>
+    </div>
+
+    <div class="grid2 row">
+      <div>
+        <label>Вылеты (bleed), мм</label>
+        <select id="bleed">
+          <option value="0">0 — без вылетов</option>
+          <option value="2">2 мм</option>
+          <option value="3" selected>3 мм — стандарт</option>
+          <option value="5">5 мм</option>
+          <option value="10">10 мм</option>
+        </select>
+      </div>
+      <div>
+        <label>Поля безопасности, мм</label>
+        <select id="safe">
+          <option value="0">0</option>
+          <option value="5" selected>5 мм</option>
+          <option value="10">10 мм</option>
+          <option value="15">15 мм</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid2 row">
+      <div>
+        <label>DPI для растра</label>
+        <select id="dpi">
+          <option value="150">150 dpi</option>
+          <option value="300" selected>300 dpi — печать</option>
+          <option value="600">600 dpi</option>
+        </select>
+      </div>
+      <div>
+        <label>Фон (бумага)</label>
+        <input type="color" id="paper" value="#ffffff">
+      </div>
+    </div>
+
+    <div class="row">
+      <label>Имя макета (необязательно)</label>
+      <input type="text" id="pname" placeholder="Например: Poster A2 final">
+    </div>
+
+    <div class="info" id="calc"></div>
+    <button class="btn primary" id="create">Создать макет</button>
+    <p class="hint">Кадр получится размером «обрез + вылеты». Красная рамка — линия реза,
+      синяя — безопасная зона. Служебные слои <code>_TRIM</code>, <code>_SAFE</code>,
+      <code>_BLEED</code> заперты и в экспорт не попадают. Рисуйте поверх них.</p>
+  </section>
+
+  <!-- ============================ Экспорт ============================ -->
+  <section class="panel" id="panel-exp">
+    <div class="row">
+      <label>Что экспортируем</label>
+      <select id="target"></select>
+    </div>
+    <div class="info" id="targetInfo"></div>
+
+    <div class="grid2 row">
+      <div>
+        <label>DPI растра</label>
+        <select id="dpi2">
+          <option value="150">150 dpi</option>
+          <option value="300" selected>300 dpi</option>
+          <option value="600">600 dpi</option>
+        </select>
+      </div>
+      <div>
+        <label>Обрезка макетов</label>
+        <select id="clips">
+          <option value="drop" selected>Убирать (для Illustrator)</option>
+          <option value="keep">Сохранять</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="chk"><input type="checkbox" id="outline" checked><label for="outline" style="margin:0;text-transform:none;letter-spacing:0">Текст в кривые (надёжнее для типографии)</label></div>
+    <div class="chk"><input type="checkbox" id="cmyk" checked><label for="cmyk" style="margin:0;text-transform:none;letter-spacing:0">PDF в CMYK (DeviceCMYK)</label></div>
+    <div class="chk"><input type="checkbox" id="imgcmyk" checked><label for="imgcmyk" style="margin:0;text-transform:none;letter-spacing:0">Картинки в PDF тоже в CMYK</label></div>
+    <div class="chk"><input type="checkbox" id="allpages"><label for="allpages" style="margin:0;text-transform:none;letter-spacing:0">Все макеты страницы — в один PDF</label></div>
+
+    <div class="sep"></div>
+
+    <button class="btn" id="expPdf"><b>PDF для печати</b><span>вектор, CMYK, TrimBox/BleedBox, без обрезок</span></button>
+    <button class="btn" id="expSvg"><b>SVG для Illustrator / CorelDRAW</b><span>чистый вектор с размерами в мм</span></button>
+    <button class="btn" id="expPng"><b>PNG с реальным DPI</b><span>растр в нужном разрешении</span></button>
+    <button class="btn" id="expJpg"><b>JPG с реальным DPI</b><span>для превью и согласования</span></button>
+
+    <div class="chk" style="margin-top:10px"><input type="checkbox" id="gvis" checked><label for="gvis" style="margin:0;text-transform:none;letter-spacing:0">Показывать направляющие</label></div>
+
+    <div class="log" id="log">Готово к работе.</div>
+  </section>
+
+  <!-- ============================= CMYK ============================= -->
+  <section class="panel" id="panel-cmyk">
+    <p class="hint">Figma работает только в RGB. Соберите цвет из CMYK-чисел — плагин создаст
+      стиль с точным пересчётом, и в PDF этот цвет уйдёт ровно теми же CMYK-числами.</p>
+    <div class="grid2 row">
+      <div><label>C, %</label><input type="number" id="c" value="0" min="0" max="100"></div>
+      <div><label>M, %</label><input type="number" id="m" value="100" min="0" max="100"></div>
+      <div><label>Y, %</label><input type="number" id="y" value="100" min="0" max="100"></div>
+      <div><label>K, %</label><input type="number" id="k" value="0" min="0" max="100"></div>
+    </div>
+    <div class="row"><div class="swatch" id="swatch"></div></div>
+    <div class="info" id="cmykInfo"></div>
+    <button class="btn primary" id="mkstyle">Создать стиль в Figma</button>
+
+    <div class="sep"></div>
+    <label>Быстрые цвета</label>
+    <div class="chips" id="quick"></div>
+  </section>
+
+  <!-- ============================ Справка ========================== -->
+  <section class="panel" id="panel-help">
+    <div class="info">
+      <b>Подробная инструкция</b><br>
+      Пошаговое руководство для новичка лежит рядом с плагином — файл
+      <code>ИНСТРУКЦИЯ.md</code> в папке <code>figma-print</code>.
+    </div>
+    <div class="info">
+      <b>Как получить макет под типографию</b><br>
+      1. Вкладка «Макет» → формат, вылеты 3 мм, DPI 300 → «Создать макет».<br>
+      2. Рисуйте <b>внутри</b> кадра, фон и картинки заводите за красную линию (в вылеты).<br>
+      3. Важное держите внутри синей рамки (безопасная зона).<br>
+      4. Вкладка «Экспорт» → «PDF для печати».<br>
+      5. Файл откройте в Illustrator: это обычные редактируемые контуры, без групп-обрезок.
+    </div>
+    <div class="info">
+      <b>Размеры, которые вы получите</b><br>
+      A4 без вылетов → страница 210×297 мм.<br>
+      A4 с вылетом 3 мм → страница <b>216×303 мм</b>, а обрезной формат (TrimBox) = 210×297 мм.
+      Типография режет по TrimBox, поэтому формат остаётся A4.
+    </div>
+    <div class="info">
+      <b>Почему CMYK — это приблизительно</b><br>
+      Экран показывает sRGB, у печати гамма уже. Плагин переводит цвета по стандартной формуле
+      (без ICC-профиля типографии). Чёрный текст становится чистым K, а не «составным».
+      Если нужна цветопроба по профилю — откройте PDF в Illustrator и примените профиль типографии.
+    </div>
+    <div class="info">
+      <b>Если что-то не попало в файл</b><br>
+      Эффекты (тени, размытие) и градиенты с прозрачностью в PDF упрощаются.
+      Слои, имя которых начинается с <code>_</code>, не экспортируются вообще — так
+      служебные направляющие не мешают.
+    </div>
+  </section>
+</main>
+
+<script>
+/*__CORE_SVG__*/
+</script>
+<script>
+/*__CORE_PDF__*/
+</script>
+<script>
+/*__UI__*/
+</script>
+</body>
+</html>
