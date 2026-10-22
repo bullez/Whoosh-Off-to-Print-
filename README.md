@@ -248,15 +248,41 @@ node tests/run.mjs
 
 Папку `tests/` можно спокойно удалить — на работу плагина она не влияет.
 
-Лицензия: делайте что хотите, только не продавайте как свой плагин.
+---
+
+## 10. Лицензия
+
+Код открыт: изучайте, форкайте и используйте плагин в своих проектах, в том числе коммерческих.  
+Нельзя продавать сам плагин, его форк или сборку как отдельный платный продукт и выдавать его за свой.
+
+Это **MIT + Commons Clause**. Полный текст — в [`LICENSE`](LICENSE).
+
+Плагин предоставляется «как есть», без гарантий. Перед печатью проверяйте макет и требования типографии.
 
 ---
 
-## Контакты автора:
+## Автор
 
-**Мыло:** bullez@mail.ru
-[`Телеграм`](https://t.me/bullez)
-[`Резюме-портфолио`](https://bullez.github.io/designer/)
-[`Блог про дизайн и код`](https://t.me/design_n_code)
-[`Блог про дизайн и код`](https://t.me/design_n_code)
+**Хайрльварин Булат**  
+Senior Graphic Designer · препресс · автоматизация
 
+10 лет в дизайне и печати, магистр информатики. Помимо макетов пишу скрипты для Illustrator, собираю 3D-конфигураторы и веб-инструменты, которые убирают рутину из работы дизайн-отделов. Whoosh — один из таких инструментов: сделал для себя и отдаю бесплатно.
+
+> **Открыт к предложениям:** Senior Graphic Designer · Communication Designer · Prepress / Print Production · Design Automation.  
+> **Локация:** Уфа / Москва · открыт к релокации и разным форматам работы.
+
+<p align="center">
+  <img alt="Open to work" src="https://img.shields.io/badge/Open_to_work-Yes-2EA44F?style=for-the-badge">
+  <a href="https://t.me/bullez"><img alt="Telegram" src="https://img.shields.io/badge/Telegram-@bullez-26A5E4?style=for-the-badge&logo=telegram&logoColor=white"></a>
+  <a href="mailto:bullez@mail.ru"><img alt="Email" src="https://img.shields.io/badge/Email-bullez@mail.ru-EA4335?style=for-the-badge&logo=gmail&logoColor=white"></a>
+  <a href="https://bullez.github.io/designer/"><img alt="Портфолио" src="https://img.shields.io/badge/Portfolio-Open-111111?style=for-the-badge&logo=githubpages&logoColor=white"></a>
+  <a href="https://www.behance.net/byllez721e"><img alt="Behance" src="https://img.shields.io/badge/Behance-Projects-1769FF?style=for-the-badge&logo=behance&logoColor=white"></a>
+  <a href="https://t.me/design_n_code"><img alt="Блог" src="https://img.shields.io/badge/Blog-Design_%26_Code-8A2BE2?style=for-the-badge&logo=telegram&logoColor=white"></a>
+</p>
+
+Если бейджи не загрузились: [Telegram](https://t.me/bullez) · [Email](mailto:bullez@mail.ru) · [Портфолио](https://bullez.github.io/designer/) · [Behance](https://www.behance.net/byllez721e) · [Блог](https://t.me/design_n_code)
+
+**Телефон:** [+7 (937) 349-53-08](tel:+79373495308)  
+**Резюме:** [PDF на Яндекс.Диске](https://disk.yandex.ru/i/T-DbQzCKZXMzWw)
+
+Если нужен дизайнер, который дружит с препрессом и кодом, — напишите в Telegram. Отвечаю быстро.
