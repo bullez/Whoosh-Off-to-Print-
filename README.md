@@ -254,7 +254,9 @@ node tests/run.mjs
 
 ## Контакты автора:
 
+**Мыло:** bullez@mail.ru
 [`Телеграм`](https://t.me/bullez)
 [`Резюме-портфолио`](https://bullez.github.io/designer/)
+[`Блог про дизайн и код`](https://t.me/design_n_code)
 [`Блог про дизайн и код`](https://t.me/design_n_code)
 
